@@ -2,6 +2,7 @@ import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import {router as userRoutes} from '../routes/usuarios.js';
+import {router as authRoutes} from '../routes/auth.js';
 import {dbConnection} from '../database/config.js';
 
 class Server {
@@ -9,12 +10,10 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.usuariosPath = '/api/usuarios';
+        this.authPath = '/api/auth';
 
-        // Conectar a base de datos
         this.conectarDB();
-        // Middlewares
         this.middlewares();
-        // Rutas de mi aplicación
         this.routes();
     }
 
@@ -23,16 +22,14 @@ class Server {
     }
 
     middlewares() {
-        // CORS
         this.app.use(cors());
-        // Lectura y parseo del body
         this.app.use(express.json());
-        // Directorio Público
         this.app.use(express.static('public'));
     }
 
     routes() {
-        this.app.use('/api/usuarios', userRoutes);
+        this.app.use(this.authPath, authRoutes);
+        this.app.use(this.usuariosPath, userRoutes);
     }
 
     listen() {
