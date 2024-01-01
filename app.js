@@ -7,5 +7,5 @@ server.listen();
 
 /*
     Se instalan los paquetes:
-    PS D:\Node\10-autenticacion-de-usuario-jwt> npm i jsonwebtoken
+    PS D:\Node\11-google-signin-front-backend> npm install google-auth-library --save
 */
